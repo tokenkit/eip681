@@ -1,0 +1,22 @@
+{
+  "name": "eip681",
+  "version": "1.0.0",
+  "description": "A eip-681 compatible URL encoding utility library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tokenkit/eip681.git"
+  },
+  "keywords": [
+    "eip681"
+  ],
+  "author": "tokenkit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tokenkit/eip681/issues"
+  },
+  "homepage": "https://github.com/tokenkit/eip681#readme"
+}
