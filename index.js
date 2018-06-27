@@ -22,34 +22,39 @@ function decode (uri, urnScheme) {
     }
 
     // 判断金额
-    var key = obj.function_name === 'transfer' ? 'unit256' : 'value';
+    var key = obj.function_name === 'transfer' ? 'uint256' : 'value';
 
     if(obj.parameters[key]) {
         obj.parameters[key] = Number(obj.parameters[key]);
         if (!isFinite(obj.parameters[key])) throw new Error('Invalid amount')
         if (obj.parameters[key] < 0) throw new Error('Invalid amount')
     }
-
-    return data;
+    return obj;
 }
 
-function encode (address, parameters, options, urnScheme) {
+function encode (contract, parameters, options, urnScheme) {
     var scheme = urnScheme || 'ethereum';
+    var address = contract
     options = options || {};
     parameters = parameters || {};
     var function_name = options.function_name ? '\/' + options.function_name : '';
     var chain_id = options.chain_id ? '@' + options.chain_id : '';
     var payTag = options.hasPayTag ? 'pay-' : '';
-    var query = qs.stringify(parameters)
 
-    var key = options.function_name === 'transfer' ? 'unit256' : 'value';
+    if(!contract) {
+        address = parameters.address
+        delete parameters.address
+    } 
+
+    var query = qs.stringify(parameters)
+    var key = options.function_name === 'transfer' ? 'uint256' : 'value';
 
     if(parameters[key]) {
         parameters[key] = Number(parameters[key]);
         if (!isFinite(parameters[key])) throw new Error('Invalid amount')
         if (parameters[key] < 0) throw new Error('Invalid amount')
     }
-
+    
   return scheme + ':' 
     + payTag 
     + address 
