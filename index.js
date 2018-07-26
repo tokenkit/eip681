@@ -1,4 +1,5 @@
 var qs = require('qs')
+import BigNumber from 'bignumber.js'
 
 function decode (uri, urnScheme) {
     urnScheme = urnScheme || 'ethereum'
@@ -25,7 +26,7 @@ function decode (uri, urnScheme) {
     var key = obj.function_name === 'transfer' ? 'uint256' : 'value';
 
     if(obj.parameters[key]) {
-        obj.parameters[key] = Number(obj.parameters[key]);
+        obj.parameters[key] = new BigNumber(obj.parameters[key]).toString();
         if (!isFinite(obj.parameters[key])) throw new Error('Invalid amount')
         if (obj.parameters[key] < 0) throw new Error('Invalid amount')
     }
@@ -51,6 +52,7 @@ function encode (contract, parameters, options, urnScheme) {
 
     if(parameters[key]) {
         parameters[key] = Number(parameters[key]);
+
         if (!isFinite(parameters[key])) throw new Error('Invalid amount')
         if (parameters[key] < 0) throw new Error('Invalid amount')
     }
